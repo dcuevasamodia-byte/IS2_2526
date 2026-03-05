@@ -3,5 +3,9 @@
   <groupId>es.unican.is2</groupId>
   <artifactId>p2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>segurosmain</module>
+  </modules>
   <name>P2</name>
 </project>
