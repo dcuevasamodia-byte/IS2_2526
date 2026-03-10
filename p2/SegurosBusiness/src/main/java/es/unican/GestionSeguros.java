@@ -39,21 +39,28 @@ public class GestionSeguros implements IGestionSeguros, IGestionClientes, IInfoS
 
     @Override
     public Cliente nuevoCliente(Cliente c) throws DataAccessException {
-        return null;
+        return clientesDAO.creaCliente(c);
     }
 
     @Override
     public Cliente bajaCliente(String dni) throws OperacionNoValida, DataAccessException {
+        Cliente c = clientesDAO.cliente(dni);
+        if (c != null) {
+            if (!c.getSeguros().isEmpty()) {
+                throw new OperacionNoValida("El cliente tiene seguros activos");
+            }
+            return clientesDAO.eliminaCliente(dni);
+        }
         return null;
     }
 
     @Override
     public Cliente cliente(String dni) throws DataAccessException {
-        return null;
+        return clientesDAO.cliente(dni);
     }
 
     @Override
     public Seguro seguro(String matricula) throws DataAccessException {
-        return null;
+        return segurosDAO.seguroPorMatricula(matricula);
     }
 }

@@ -116,7 +116,40 @@ public class Seguro {
 	 *         0 si el seguro todavía no está en vigor (no se ha alcanzado su fecha de inicio)
      */
 	public double precio() {
-		return 0;
+		LocalDate hoy = LocalDate.now();
+
+        // Si el seguro todavía no ha empezado vale 0
+        if (fechaInicio != null && fechaInicio.isAfter(hoy)) {
+            return 0.0;
+        }
+
+        double precioBase = 0.0;
+
+        // Precios base según cobertura
+        if (cobertura == Cobertura.TODO_RIESGO) {
+            precioBase = 1000.0;
+        } else if (cobertura == Cobertura.TERCEROS_LUNAS) {
+            precioBase = 600.0;
+        } else if (cobertura == Cobertura.TERCEROS) {
+            precioBase = 400.0;
+        }
+
+        // Recargos
+        double recargoPotencia = 0.0;
+        if (potencia > 110) {
+            recargoPotencia = precioBase * 0.20; 
+        } else if (potencia >= 90 && potencia <= 110) {
+            recargoPotencia = precioBase * 0.05; 
+        }
+
+        double precioTotal = precioBase + recargoPotencia;
+
+        // Oferta primer año
+        if (fechaInicio != null && hoy.isBefore(fechaInicio.plusYears(1))) {
+            precioTotal = precioTotal * 0.80; 
+        }
+
+        return precioTotal;
 	}
 	
 }
