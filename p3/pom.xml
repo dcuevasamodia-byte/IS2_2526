@@ -25,11 +25,11 @@
 
     <!-- Nombres de los directorios que contienen los módulos. Asegurar que se correspondan con vuestros directorios -->
     <modules>
-	<module>SegurosCommon</module>
- 	<module>SegurosDAOH2</module>
-        <module>SegurosBusiness</module>   
-        <module>SegurosGUI</module>
-	<module>SegurosMain</module>
+	<module>seguroscommon</module>
+ 	<module>segurosdaoh2</module>
+        <module>segurosbusiness</module>   
+        <module>segurosgui</module>
+	<module>segurosmain</module>
     </modules>
 
 </project>
