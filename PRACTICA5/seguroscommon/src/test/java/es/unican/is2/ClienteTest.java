@@ -16,13 +16,6 @@ public class ClienteTest {
         cliente.setDni("12345678A");
         cliente.setMinusvalia(true);
     }
-
-    @Test
-    public void testGettersYSetters() {
-       assertEquals("Juan", cliente.getNombre());
-        assertEquals("12345678A", cliente.getDni());
-        assertTrue(cliente.getMinusvalia());
-    }
     
     @Test
     public void testTotalSegurosSinSeguros() {

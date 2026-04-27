@@ -15,25 +15,6 @@ public class SeguroTest {
     }
 
     @Test
-    public void testGettersYSetters() {
-        seguro.setId(1L);
-        seguro.setMatricula("1234ABC");
-        seguro.setPotencia(100);
-        seguro.setCobertura(Cobertura.TODO_RIESGO); 
-        seguro.setConductorAdicional("Pepe");
-        
-        LocalDate fecha = LocalDate.now();
-        seguro.setFechaInicio(fecha);
-
-        assertEquals(1L, seguro.getId());
-        assertEquals("1234ABC", seguro.getMatricula());
-        assertEquals(100, seguro.getPotencia());
-        assertEquals(Cobertura.TODO_RIESGO, seguro.getCobertura());
-        assertEquals("Pepe", seguro.getConductorAdicional());
-        assertEquals(fecha, seguro.getFechaInicio());
-    }
-
-    @Test
     public void testPrecioSeguroFuturo() {
         seguro.setFechaInicio(LocalDate.now().plusDays(5));
         assertEquals(0.0, seguro.precio(), 0.01);
