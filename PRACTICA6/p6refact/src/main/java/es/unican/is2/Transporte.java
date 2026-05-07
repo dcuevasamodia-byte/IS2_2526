@@ -1,4 +1,9 @@
-/* Clase que representa un transporte realizado por un conductor */
+/**
+ * Clase que representa un transporte realizado por un conductor 
+ * 
+ * WMC Total = 6 (2 del constructor + 4 getters simples)
+ * CCog Total = 2 (2 ifs en el constructor)
+ */
 public class Transporte {
 	
 	private double horas;
@@ -6,41 +11,41 @@ public class Transporte {
 	private int personas;
 	private CategoriaTransporte cat;
 	
-	/**
-	 * Constructor de la clase Transporte
-	 * @param horas Horas que ha durado el transporte
-	 * @param cat Categoria del transporte
-	 * @param valor En caso de ser un transporte de tipo Personas, 
-	 * representa el numero de personas, en caso de ser de tipo Mercancias 
-	 * representa las toneladas
-	 */ 
+	// WMC = 2 (1 base + 1 if)
+	// CCog = 2 (1 por el primer if + 1 por el if del enum)
 	public Transporte(double horas, CategoriaTransporte cat, int valor) throws IllegalArgumentException {
 		if (horas <= 0 || valor <= 0 || cat == null) {
 			throw new IllegalArgumentException();
 		}
 		this.horas = horas;
 		this.cat = cat;
-		if (cat.equals(CategoriaTransporte.Personas)) {
+		
+		// Refactor: Uso de '==' en vez de .equals para Enums
+		if (cat == CategoriaTransporte.Personas) {
 			this.personas = valor;
 		} else  {
 			this.ton = valor;
 		}
 	}
 	
-	public double horas() {
+	// Refactor: Nombres estandarizados a getters
+	// WMC = 1, CCog = 0
+	public double getHoras() {
 		return horas;
 	}
 
-	public CategoriaTransporte categoria() {
+	// WMC = 1, CCog = 0
+	public CategoriaTransporte getCategoria() {
 		return cat;
 	}
 
-	public int ton() {
+	// WMC = 1, CCog = 0
+	public int getTon() {
 		return ton;
 	}
 
+	// WMC = 1, CCog = 0
 	public int getPersonas() {
 		return personas;
 	}
-	
 }

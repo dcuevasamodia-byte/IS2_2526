@@ -4,12 +4,12 @@ import fundamentos.*;
 
 /**
  * Gestion de una empresa de transportes
+ * 
+ * WMC Alto por múltiples estructuras switch e if dentro del lazo infinito.
+ * CCog Alta por niveles profundos de anidamiento dentro de los cases.
  */
 public class GestionTransportesGUI {
 
-	/**
-	 * Programa principal basado en menu
-	 */
 	public static void main(String[] args) {
 		// opciones del menu
 		final int ANHADE_CONDUCTOR = 0, ANHADE_TRANSPORTE = 1, 
@@ -20,8 +20,9 @@ public class GestionTransportesGUI {
 		Lectura lect;
 		Conductor c;
 
-		// crea la empresa de transportes
-		gestionTransportes gt = new gestionTransportes();
+		// Refactor: Uso del nombre correcto con mayúscula
+		GestionTransportes gt = new GestionTransportes(); 
+		
 		// crea la ventana de menu
 		Menu menu = new Menu("Transportes");
 		menu.insertaOpcion("Anhade conductor", ANHADE_CONDUCTOR);
@@ -35,7 +36,6 @@ public class GestionTransportesGUI {
 		while(true) {
 			opcion = menu.leeOpcion();
 
-			// realiza las acciones dependiendo de la opcion elegida
 			switch (opcion) {
 			case  ANHADE_CONDUCTOR:
 				lect = new Lectura("Datos Conductor");
@@ -50,7 +50,7 @@ public class GestionTransportesGUI {
 				String apellido1 = lect.leeString("Apellido1");
 				String apellido2 = lect.leeString("Apellido2");
 				String direccion = lect.leeString("Direccion");
-				// Anhade el conductor
+				
 				if (!gt.anhadeConductor(dni, nombre, apellido1, apellido2, direccion)) 
 					mensaje("ERROR", "Ya existe un conductor con DNI "+dni);
 				break;
@@ -74,7 +74,7 @@ public class GestionTransportesGUI {
 				if (c!=null) {
 					switch (tipo) {
 						case "P":
-							t = new Transporte(horas,CategoriaTransporte.Personas, personas);
+							t = new Transporte(horas, CategoriaTransporte.Personas, personas);
 							c.anhadeTransporte(t);
 							break;
 						case "M":
@@ -107,7 +107,8 @@ public class GestionTransportesGUI {
 			case MEJOR_CONDUCTOR:
 				List<Conductor> resultado = new LinkedList<Conductor>();
 				double maxSueldo = 0.0;
-				for (Conductor conductor : gt.conductores()) {
+				// Refactor: Actualizada la llamada al getter corregido
+				for (Conductor conductor : gt.getConductores()) {
 					if (conductor.sueldo() > maxSueldo) {
 						maxSueldo = conductor.sueldo();
 						resultado.clear();
@@ -121,7 +122,8 @@ public class GestionTransportesGUI {
 					msj = "No hay conductores";
 				} else {
 					for (Conductor conductor : resultado) {
-						msj += conductor.getNombre() + " "+conductor.getNombre()+"\n";
+						// Refactor BUG: Antes imprimía nombre + nombre. Ahora es nombre + apellido
+						msj += conductor.getNombre() + " " + conductor.getApellido1() + "\n";
 					}
 				}
 				mensaje("MEJOR CONDUCTOR", msj);
@@ -130,15 +132,8 @@ public class GestionTransportesGUI {
 		}
 	}
 
-	/**
-	 * Metodo auxiliar que muestra un ventana de mensaje
-	 * @param titulo titulo de la ventana
-	 * @param txt texto contenido en la ventana
-	 */
 	private static void mensaje(String titulo, String txt) {
 		Mensaje msj = new Mensaje(titulo);
 		msj.escribe(txt);
-
 	}
-
 }

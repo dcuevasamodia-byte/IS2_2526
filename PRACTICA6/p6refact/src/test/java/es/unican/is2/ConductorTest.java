@@ -1,30 +1,28 @@
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 public class ConductorTest {
 	
 	private static Conductor sut;
 
-
 	@Test
 	public void testConstructor() {
 		// Casos validos
-		sut= new Conductor("123123123X", "Pepe", "Martinez", "Fernandez", "Avda. de los Castros s/n" );
-		assertEquals("123123123X", sut.dni());
+		sut = new Conductor("123123123X", "Pepe", "Martinez", "Fernandez", "Avda. de los Castros s/n" );
 		assertEquals("123123123X", sut.getDni());
 		assertEquals("Pepe", sut.getNombre());
 		assertEquals("Martinez", sut.getApellido1());
-		assertEquals("Fernandez", sut.apellido2());
-		assertEquals("Avda. de los Castros s/n", sut.getDire());
+		// Refactor: Actualizadas las llamadas a los nuevos getters
+		assertEquals("Fernandez", sut.getApellido2()); 
+		assertEquals("Avda. de los Castros s/n", sut.getDireccion()); 
 
-		sut= new Conductor("123123123X", "Pepe", "Martinez", null, "Avda. de los Castros s/n" );
-		assertEquals("123123123X", sut.dni());
+		sut = new Conductor("123123123X", "Pepe", "Martinez", null, "Avda. de los Castros s/n" );
 		assertEquals("123123123X", sut.getDni());
 		assertEquals("Pepe", sut.getNombre());
 		assertEquals("Martinez", sut.getApellido1());
-		assertNull(sut.apellido2());
-		assertEquals("Avda. de los Castros s/n", sut.getDire());
+		// Refactor: Actualizadas las llamadas a los nuevos getters
+		assertNull(sut.getApellido2()); 
+		assertEquals("Avda. de los Castros s/n", sut.getDireccion()); 
 
 		// Casos no validos
 		assertThrows(IllegalArgumentException.class, () -> new Conductor(null, "Pepe", "Martinez", "Fernandez", "Avda. de los Castros s/n" ));
@@ -35,7 +33,7 @@ public class ConductorTest {
 
 	@Test
 	public void testSueldoYAnhadeTransporte() {
-		sut= new Conductor("123123123X", "Pepe", "Martinez", "Fernandez", "Avda. de los Castros s/n" );
+		sut = new Conductor("123123123X", "Pepe", "Martinez", "Fernandez", "Avda. de los Castros s/n" );
 		
 		// Casos validos
 		assertTrue(sut.sueldo() == 700);
@@ -60,5 +58,4 @@ public class ConductorTest {
 		sut.anhadeTransporte(transMercancias10horas100ton);
 		assertEquals(1133.5, sut.sueldo());
 	}
-
 }
