@@ -1,3 +1,5 @@
+package es.unican.is2;
+
 /**
  * Clase que representa un transporte realizado por un conductor 
  * 
@@ -11,40 +13,39 @@ public class Transporte {
 	private int personas;
 	private CategoriaTransporte cat;
 	
-	// WMC = 2 (1 base + 1 if)
-	// CCog = 2 (1 por el primer if + 1 por el if del enum)
+	// WMC: 5, CCog: 4
 	public Transporte(double horas, CategoriaTransporte cat, int valor) throws IllegalArgumentException {
+		// WMC: +1 + 2, CCog: +1, +1
 		if (horas <= 0 || valor <= 0 || cat == null) {
 			throw new IllegalArgumentException();
 		}
 		this.horas = horas;
 		this.cat = cat;
 		
-		// Refactor: Uso de '==' en vez de .equals para Enums
+		// WMC: +1, CCog: +1
 		if (cat == CategoriaTransporte.Personas) {
 			this.personas = valor;
-		} else  {
+		} else  { //CCog: +1
 			this.ton = valor;
 		}
 	}
 	
-	// Refactor: Nombres estandarizados a getters
-	// WMC = 1, CCog = 0
+	// WMC = 1
 	public double getHoras() {
 		return horas;
 	}
 
-	// WMC = 1, CCog = 0
+	// WMC = 1
 	public CategoriaTransporte getCategoria() {
 		return cat;
 	}
 
-	// WMC = 1, CCog = 0
+	// WMC = 1
 	public int getTon() {
 		return ton;
 	}
 
-	// WMC = 1, CCog = 0
+	// WMC = 1
 	public int getPersonas() {
 		return personas;
 	}

@@ -1,15 +1,17 @@
+package es.unican.is2;
+
 import java.util.LinkedList;
 import java.util.List;
-import fundamentos.*;
 
 /**
  * Gestion de una empresa de transportes
  * 
- * WMC Alto por múltiples estructuras switch e if dentro del lazo infinito.
- * CCog Alta por niveles profundos de anidamiento dentro de los cases.
+ * WMC Total = 22
+ * CCog Total = 30
  */
 public class GestionTransportesGUI {
 
+	// WMC: 17, CCog: 34 
 	public static void main(String[] args) {
 		// opciones del menu
 		final int ANHADE_CONDUCTOR = 0, ANHADE_TRANSPORTE = 1, 
@@ -20,7 +22,7 @@ public class GestionTransportesGUI {
 		Lectura lect;
 		Conductor c;
 
-		// Refactor: Uso del nombre correcto con mayúscula
+		
 		GestionTransportes gt = new GestionTransportes(); 
 		
 		// crea la ventana de menu
@@ -32,12 +34,13 @@ public class GestionTransportesGUI {
 		
 		int opcion;
 
-		// lazo de espera de comandos del usuario
+		// WMC: +1, CCog: +1
 		while(true) {
 			opcion = menu.leeOpcion();
 
+			// CCog: +2 
 			switch (opcion) {
-			case  ANHADE_CONDUCTOR:
+			case  ANHADE_CONDUCTOR: // WMC: +1
 				lect = new Lectura("Datos Conductor");
 				lect.creaEntrada("DNI", "");
 				lect.creaEntrada("Nombre","");
@@ -51,11 +54,12 @@ public class GestionTransportesGUI {
 				String apellido2 = lect.leeString("Apellido2");
 				String direccion = lect.leeString("Direccion");
 				
+				// WMC: +1, CCog: +3 
 				if (!gt.anhadeConductor(dni, nombre, apellido1, apellido2, direccion)) 
 					mensaje("ERROR", "Ya existe un conductor con DNI "+dni);
 				break;
 
-			case ANHADE_TRANSPORTE:
+			case ANHADE_TRANSPORTE: // WMC: +1
 				lect = new Lectura("Nuevo transporte");
 				lect.creaEntrada("DNI", "");
 				lect.creaEntrada("Tipo Transporte: P | M | MP", "");
@@ -71,58 +75,66 @@ public class GestionTransportesGUI {
 
 				Transporte t = null;
 				c = gt.buscaConductor(dni);
+				// WMC: +1, CCog: +3 
 				if (c!=null) {
+					// CCog: +4 
 					switch (tipo) {
-						case "P":
+						case "P": // WMC: +1
 							t = new Transporte(horas, CategoriaTransporte.Personas, personas);
 							c.anhadeTransporte(t);
 							break;
-						case "M":
+						case "M": // WMC: +1
 							t = new Transporte(horas, CategoriaTransporte.Mercancias, toneladas);
 							c.anhadeTransporte(t);
 							break;
-						case "MP":
+						case "MP": // WMC: +1
 							t = new Transporte(horas, CategoriaTransporte.MercanciasPeligrosas, toneladas);
 							c.anhadeTransporte(t);
 							break;		
 					}
-				} else {
+				} else { // CCog: +1
 					mensaje("ERROR", "No existe un conductor con DNI "+dni);
 				}
 				break;
 				
-			case SUELDO_CONDUCTOR:
+			case SUELDO_CONDUCTOR: // WMC: +1
 				lect = new Lectura("Transportes Peligrosos");
 				lect.creaEntrada("DNI", "");
 				lect.esperaYCierra();
 				dni = lect.leeString("DNI");
 				c = gt.buscaConductor(dni);
+				// WMC: +1, CCog: +3 
 				if (c!=null){
 					mensaje("Sueldo", "El sueldo del conductor es: "+c.sueldo());
-				} else {
+				} else { // CCog: +1
 					mensaje("ERROR", "No existe un conductor con DNI "+dni);
 				}
  				break;
 
-			case MEJOR_CONDUCTOR:
+			case MEJOR_CONDUCTOR: // WMC: +1
 				List<Conductor> resultado = new LinkedList<Conductor>();
 				double maxSueldo = 0.0;
-				// Refactor: Actualizada la llamada al getter corregido
+				
+				// WMC: +1, CCog: +3 
 				for (Conductor conductor : gt.getConductores()) {
+					// WMC: +1, CCog: +4 )
 					if (conductor.sueldo() > maxSueldo) {
 						maxSueldo = conductor.sueldo();
 						resultado.clear();
 						resultado.add(conductor);
+					// WMC: +1, CCog: +1
 					} else if (conductor.sueldo() == maxSueldo) {
 						resultado.add(conductor);
 					}
 				}		
 				String msj = "";
+				// WMC: +1, CCog: +3 
 				if (resultado.size() == 0) {
 					msj = "No hay conductores";
-				} else {
+				} else { // CCog: +1
+					// WMC: +1, CCog: +4 
 					for (Conductor conductor : resultado) {
-						// Refactor BUG: Antes imprimía nombre + nombre. Ahora es nombre + apellido
+						
 						msj += conductor.getNombre() + " " + conductor.getApellido1() + "\n";
 					}
 				}
@@ -132,6 +144,7 @@ public class GestionTransportesGUI {
 		}
 	}
 
+	// WMC: 1
 	private static void mensaje(String titulo, String txt) {
 		Mensaje msj = new Mensaje(titulo);
 		msj.escribe(txt);

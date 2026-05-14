@@ -1,36 +1,36 @@
+package es.unican.is2;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * WMC Total = 6
- * CCog Total = 4
+ * CCog Total = 6
  */
-public class GestionTransportes { // Refactor: Primera letra en mayúscula
+public class GestionTransportes { 
 
-	private ArrayList<Conductor> listaConductores = new ArrayList<Conductor>(); // Refactor: cs -> listaConductores
+	private ArrayList<Conductor> listaConductores = new ArrayList<Conductor>(); 
 	
-	// WMC = 3 (1 base + 1 for + 1 if)
-	// CCog = 3 (1 for + 2 if anidado)
+	// WMC: 3, CCog: 3
 	public Conductor buscaConductor(String DNI) {		
-		for(Conductor c: listaConductores) 
-			if (c.getDni().equals(DNI)) // Refactor: adaptado al nuevo getter
+		for(Conductor c: listaConductores) // WMC: +1, CCog: +1
+			if (c.getDni().equals(DNI)) // WMC: +1, CCog: +2 
 				return c;
 		
 		return null;
 	}
 	
-	// WMC = 2 (1 base + 1 if)
-	// CCog = 1 (1 if)
+	// WMC: 2, CCog: 1
 	public boolean anhadeConductor(String dni, String nombre, String apellido1, String apellido2, String direccion) {
-		if (buscaConductor(dni) != null)
+		if (buscaConductor(dni) != null) // WMC: +1, CCog: +1
 			return false;
 		listaConductores.add(new Conductor(dni, nombre, apellido1, apellido2, direccion));
 		return true;
 	}
 
-	// WMC = 1, CCog = 0
-	public List<Conductor> getConductores() { // Refactor: Renombrado a getConductores
-		// Refactor: Devolver copia para proteger el encapsulamiento
+	// WMC: 1
+	public List<Conductor> getConductores() { 
+		
 		return new ArrayList<>(listaConductores); 
 	}
 	

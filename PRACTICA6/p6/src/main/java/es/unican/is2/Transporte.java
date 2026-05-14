@@ -8,9 +8,9 @@ public class Transporte {
 	private int personas;
 	private CategoriaTransporte cat;
 	
-	// WMC: 4, CCog: 3
+	// WMC: 5, CCog: 4
 	public Transporte(double horas, CategoriaTransporte cat, int valor) throws IllegalArgumentException {
-		// WMC: +1 + 2, CCog: +1
+		// WMC: +1 + 2, CCog: +1, +1
 		if (horas <= 0 || valor <= 0 || cat == null) {
 			throw new IllegalArgumentException();
 		}

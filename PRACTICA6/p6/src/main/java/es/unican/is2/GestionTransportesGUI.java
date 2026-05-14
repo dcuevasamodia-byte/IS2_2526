@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class GestionTransportesGUI {
 
-	// WMC: 8, CCog: 11
+	// WMC: 17, CCog: 30
 	public static void main(String[] args) {
 		// opciones del menu
 		final int ANHADE_CONDUCTOR = 0, ANHADE_TRANSPORTE = 1, 
@@ -36,8 +36,8 @@ public class GestionTransportesGUI {
 			opcion = menu.leeOpcion();
 
 			// realiza las acciones dependiendo de la opcion elegida
-			switch (opcion) { //CCog: +1
-			case  ANHADE_CONDUCTOR: // WMC: +1, CCog: +1
+			switch (opcion) { //CCog: +2
+			case  ANHADE_CONDUCTOR: // WMC: +1
 				lect = new Lectura("Datos Conductor");
 				lect.creaEntrada("DNI", "");
 				lect.creaEntrada("Nombre","");
@@ -51,11 +51,11 @@ public class GestionTransportesGUI {
 				String apellido2 = lect.leeString("Apellido2");
 				String direccion = lect.leeString("Direccion");
 				// Anhade el conductor
-				if (!gt.anhadeConductor(dni, nombre, apellido1, apellido2, direccion)) // WMC: +1, CCog: +2 
+				if (!gt.anhadeConductor(dni, nombre, apellido1, apellido2, direccion)) // WMC: +1, CCog: +3
 					mensaje("ERROR", "Ya existe un conductor con DNI "+dni);
 				break;
 
-			case ANHADE_TRANSPORTE: // WMC: +1, CCog: +1 
+			case ANHADE_TRANSPORTE: // WMC: +1 
 				lect = new Lectura("Nuevo transporte");
 				lect.creaEntrada("DNI", "");
 				lect.creaEntrada("Tipo Transporte: P | M | MP", "");
@@ -71,17 +71,17 @@ public class GestionTransportesGUI {
 
 				Transporte t = null;
 				c = gt.buscaConductor(dni);
-				if (c!=null) { // WMC: +1, CCog: +2 
+				if (c!=null) { // WMC: +1, CCog: +3 
 					switch (tipo) { //CCog: +1 
-						case "P": // WMC: +1, CCog: +1 
+						case "P": // WMC: +1
 							t = new Transporte(horas,CategoriaTransporte.Personas, personas);
 							c.anhadeTransporte(t);
 							break;
-						case "M": // WMC: +1, CCog: +1 
+						case "M": // WMC: +1
 							t = new Transporte(horas, CategoriaTransporte.Mercancias, toneladas);
 							c.anhadeTransporte(t);
 							break;
-						case "MP": // WMC: +1, CCog: +1 
+						case "MP": // WMC: +1
 							t = new Transporte(horas, CategoriaTransporte.MercanciasPeligrosas, toneladas);
 							c.anhadeTransporte(t);
 							break;		
@@ -91,24 +91,24 @@ public class GestionTransportesGUI {
 				}
 				break;
 				
-			case SUELDO_CONDUCTOR: // WMC: +1, CCog: +1 
+			case SUELDO_CONDUCTOR: // WMC: +1
 				lect = new Lectura("Transportes Peligrosos");
 				lect.creaEntrada("DNI", "");
 				lect.esperaYCierra();
 				dni = lect.leeString("DNI");
 				c = gt.buscaConductor(dni);
-				if (c!=null){ // WMC: +1, CCog: +2 
+				if (c!=null){ // WMC: +1, CCog: +3 
 					mensaje("Sueldo", "El sueldo del conductor es: "+c.sueldo());
-				} else { // WMC: +0, CCog: +1 
+				} else { //CCog: +1 
 					mensaje("ERROR", "No existe un conductor con DNI "+dni);
 				}
  				break;
 
-			case MEJOR_CONDUCTOR: // WMC: +1, CCog: +1
+			case MEJOR_CONDUCTOR: // WMC: +1
 				List<Conductor> resultado = new LinkedList<Conductor>();
 				double maxSueldo = 0.0;
-				for (Conductor conductor : gt.conductores()) { // WMC: +1, CCog: +2 
-					if (conductor.sueldo() > maxSueldo) { // WMC: +1, CCog: +3 
+				for (Conductor conductor : gt.conductores()) { // WMC: +1, CCog: +3
+					if (conductor.sueldo() > maxSueldo) { // WMC: +1, CCog: +4
 						maxSueldo = conductor.sueldo();
 						resultado.clear();
 						resultado.add(conductor);
@@ -117,10 +117,10 @@ public class GestionTransportesGUI {
 					}
 				}		
 				String msj = "";
-				if (resultado.size() == 0) { // WMC: +1, CCog: +1 
+				if (resultado.size() == 0) { // WMC: +1, CCog: +3 
 					msj = "No hay conductores";
 				} else { //CCog: +1 
-					for (Conductor conductor : resultado) { // WMC: +1, CCog: +2 
+					for (Conductor conductor : resultado) { // WMC: +1, CCog: +4 
 						msj += conductor.getNombre() + " "+conductor.getNombre()+"\n";
 					}
 				}
